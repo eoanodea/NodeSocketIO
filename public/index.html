@@ -11,41 +11,9 @@
     <h1>Socket.io Demo</h1>
     <p id="clientId"></p>
     <p id="clientCount">0 Clients connected</p>
-    <p id="buttonCount">Your button has been clicked 0 times</p>
-    <div id="clients"></div>
+    <canvas id="myCanvas" width="600" height="600" style="border:1px solid #d3d3d3;"></canvas>
     
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io.connect()
-        var clicked = 0;
-
-        socket.on('connect', function() {
-            document.getElementById('clientId').innerHTML = `Client ID: ${socket.id}`
-        })
-
-        socket.on('clientList', function(data) {
-            document.getElementById('clientCount').innerHTML = `${data.length} Clients Connected`
-            document.getElementById('clients').innerHTML = ""
-
-            for(var i = 0; i < data.length; i++) {
-                var btn = document.createElement('BUTTON')
-                btn.onclick = clientButtonClicked
-                var textnode = document.createTextNode(data[i])
-                btn.appendChild(textnode)
-                document.getElementById('clients').appendChild(btn)
-            }
-        })
-        //When the client button is clicked
-        function clientButtonClicked() {
-            //Tell the server the button has been clicked, and send the client ID with it
-            socket.emit('clientClicked', this.innerHTML);
-        }
-
-        socket.on('youWereClicked', function(data) {
-            clicked++
-
-            document.getElementById('buttonCount').innerHTML = `Your button has been clicked ${clicked} times`
-        })
-    </script>
+    <script src="./script.js"></script>
 </body>
 </html>
